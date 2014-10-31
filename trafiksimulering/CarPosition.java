@@ -57,6 +57,10 @@ public class CarPosition{
 	public void setForward(CarPosition forward) {
 		this.forward = forward;
 	}
+
+	
+		
+	
 	
 	
 }

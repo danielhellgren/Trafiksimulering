@@ -11,30 +11,29 @@ public class Car {
     
    
     public void step(){
+     bornTime++;
+     if(currentPosition.moveForward()){
+    	 setCurrentPosition(currentPosition.getForward());
+    	 
+     }
       	// Uppdatera bilen ett tidssteg
     }
-    public Car(int Time, CarPosition dest, CarPosition startingPos){
-    	this.bornTime = Time;
-    	this.destination = dest;
-    	this.currentPosition = startingPos; 
+    public Car(CarPosition dest, CarPosition startingPos){
+    	bornTime = 0;
+    	destination = dest;
+    	currentPosition = startingPos; 
     			
     }
     public CarPosition getDestination() {
-    	return this.destination;
+    	return destination;
     }
     public CarPosition getCurrent_position(){
-    	return this.currentPosition;
+    	return currentPosition;
     }
-    public void setDestination(CarPosition dest) throws Exception{
-    	if(dest == null){
-    		throw new Exception("Must have a valid destination");
-    		}
+    public void setDestination(CarPosition dest){
     	this.destination = dest;
     }
-    public void setPos(CarPosition pos) throws Exception{
-    	if(pos == null){
-    		throw new Exception("Must have a valid Position");
-    		}
+    public void setCurrentPosition(CarPosition pos){
     	this.currentPosition = pos;
     }
     // konstruktor och get- oct set-metoder
@@ -42,7 +41,7 @@ public class Car {
 
     public String toString(){
     	
-    	return "Car(Destination: " + this.destination + " \n Car(current position: " + this.currentPosition + ")\n";
+    	return "Car(Born Time: " + bornTime + ")\nCar(Destination: " + destination + " \nCar(current position: " + currentPosition + ")\n";
     	}
 
 }

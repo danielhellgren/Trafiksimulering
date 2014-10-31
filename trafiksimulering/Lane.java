@@ -1,6 +1,14 @@
 public class Lane {
 
     public static class OverflowException extends RuntimeException {
+       public OverflowException() { 
+    	   super();
+       }
+       public OverflowException(String message) { 
+    	   super(message); 
+       }
+  
+       
         // Undantag som kastas när det inte gick att lägga 
         // in en ny bil på vägen
     }
@@ -41,41 +49,63 @@ public class Lane {
 
     public void step() {
     	
-    	int i = getLength();
-    	
-    	while(i > 0){
+    	int i = 1;
+    	if(theLane[0].getCurrentCar() != null){
+    		getFirst();
+    	}
+    	while(i <= getLength()){
     		if(theLane[i].getCurrentCar() != null && theLane[i].moveForward()){
     			theLane[i].getForward().setCurrentCar(theLane[i].getCurrentCar());
+    			theLane[i].setCurrentCar(null);
     		}
+    		i++;
     	}
+    	
 	// Stega fram alla fordon (utom det på plats 0) ett steg 
         // (om det går). (Fordonet på plats 0 tas bort utifrån 
 	// mm h a metoden nedan.)
     }
 
     public Car getFirst() {
-    	return null;
+    	Car First = theLane[0].getCurrentCar();
+    	theLane[0].setCurrentCar(null);
+    	return First;
 	// Returnera och tag bort bilen som står först
     }
 
     public Car firstCar() {
-    	return null;
+    	return theLane[0].getCurrentCar();
 	// Returnera bilen som står först utan att ta bort den
     }
 
 
     public boolean lastFree() {
-    	return false;
+    	int i = getLength();
+    	return (theLane[i].getCurrentCar() == null);
 	// Returnera true om sista platsen ledig, annars false
     }
 
     public void putLast(Car c) throws OverflowException {
-	// Ställ en bil på sista platsen på vägen
-	// (om det går).
-    }
+    	if(!lastFree()){ 
+    		throw new OverflowException("The position is occupied"); 
+    	} else {
+    		int i = getLength();
+    		theLane[i].setCurrentCar(c);
+    	}
+    	// Ställ en bil på sista platsen på vägen
+    	// (om det går).
+    }			
 
     public String toString() {
-    	return "";
+    	int i = getLength();
+    	int cars = 0;
+    	while(i>=0){
+    		if(theLane[i].getCurrentCar() != null){
+    			cars++;
+    		}
+    		i++;
+    	}
+    	return "number of Cars in the lane: (" + cars + ") out of (" + i + ") available spots.\n";
     	//...
     	}
 
