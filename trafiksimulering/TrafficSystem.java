@@ -1,7 +1,8 @@
 public class TrafficSystem {
     // Definierar de vägar och signaler som ingår i det 
-    // system som skall studeras.
-    // Samlar statistik
+   private int AvarageCarTime = 0; // system som skall studeras.
+   
+   // Samlar statistik
     
     // Attribut som beskriver beståndsdelarna i systemet
     private Lane  r0;
@@ -9,7 +10,8 @@ public class TrafficSystem {
     private Lane  r2;
     private Light s1;
     private Light s2;
-
+    
+    
     // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
     // destinationer...)
 
@@ -18,7 +20,14 @@ public class TrafficSystem {
     
     private int time = 0;
 
-    public TrafficSystem() {
+    public TrafficSystem(int r0, int r1, int r2, int s11, int s12, int s21, int s22){
+    	this.r0 = new Lane(r0);
+    	this.r1 = new Lane(r1);
+    	this.r2 = new Lane(r2);
+    	this.s1 = new Light(s11,s12);
+    	this.s2 = new Light(s21,s22);
+    	
+    	
     	//...
     	}
 
@@ -32,6 +41,7 @@ public class TrafficSystem {
     }
 
     public void step() {
+    	this.time++;
 	// Stega systemet ett tidssteg m h a komponenternas step-metoder
 	// Skapa bilar, lägg in och ta ur på de olika Lane-kompenenterna
     }
@@ -41,6 +51,7 @@ public class TrafficSystem {
     }
 
     public void print() {
+    	return System.out.print()
 	// Skriv ut en grafisk representation av kösituationen
 	// med hjälp av klassernas toString-metoder
     }

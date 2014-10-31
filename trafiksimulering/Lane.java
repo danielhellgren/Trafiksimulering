@@ -78,7 +78,8 @@ public class Lane {
 	// Returnera bilen som står först utan att ta bort den
     }
 
-
+   
+    
     public boolean lastFree() {
     	int i = getLength();
     	return (theLane[i].getCurrentCar() == null);
@@ -104,6 +105,7 @@ public class Lane {
     			cars++;
     		}
     		i++;
+    		
     	}
     	return "number of Cars in the lane: (" + cars + ") out of (" + i + ") available spots.\n";
     	//...

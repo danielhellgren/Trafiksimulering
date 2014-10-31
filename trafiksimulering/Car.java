@@ -1,5 +1,5 @@
 import java.io.IOException;
-
+import java.util.Scanner;  
 
 
 public class Car {
@@ -43,5 +43,9 @@ public class Car {
     	
     	return "Car(Born Time: " + bornTime + ")\nCar(Destination: " + destination + " \nCar(current position: " + currentPosition + ")\n";
     	}
-
+   // public static void main(String args[]){
+    //	System.out.println("Vi gör en bil");
+    //	Car bob = new Car(null, null);
+    //	System.out.println(bob);
+   // }
 }
