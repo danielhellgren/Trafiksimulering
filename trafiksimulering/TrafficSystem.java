@@ -2,10 +2,11 @@ import java.util.Random;
 
 public class TrafficSystem {
     // Definierar de vägar och signaler som ingår i det 
-   private int AvarageCarTime = 0; // system som skall studeras.
-   private int Cars = 0;
-   private int lowTime;
-   private int longTime;
+	private int TotalCarTime = 0;
+	private int AvarageCarTime = 0; // system som skall studeras.
+	private int Cars = 0;
+	private int lowTime = 0;
+	private int longTime = 0;
    // Samlar statistik
     
     // Attribut som beskriver beståndsdelarna i systemet
@@ -30,16 +31,16 @@ public class TrafficSystem {
 		int Ai = rand.nextInt(n)+1;
 		this.NextCar = Ai;
 	}
-	public TrafficSystem(int r0, int r1, int r2, int s11, int s12, int s21, int s22, int n){
+	public TrafficSystem(int r0,  int r, int s1Period, int s1Green, int s2Period, int s2Green, int Ankomstintensitet){
 		CarPosition turn = new CarPosition(this.r2);
     	this.r0 = new Lane(r0);
-    	this.r1 = new Lane(r1);
-    	this.r2 = new Lane(r2);
+    	this.r1 = new Lane(r);
+    	this.r2 = new Lane(r);
     	this.r2.firstSpot().setTurn(turn);
     	this.s1 = new Light(s11,s12);
     	this.s2 = new Light(s21,s22);
-    	Ankomstintesitet = n;
-    	nextcar(Ankomstintesitet);
+    	this.Ankomstintesitet = Ankomstintensitet;
+    	nextcar(this.Ankomstintesitet);
     	
     	//...
     	}
@@ -48,12 +49,17 @@ public class TrafficSystem {
 		int Dest = rand.nextInt(1)+1;
 		CarPosition last = r0.lastSpot();
 		if(Dest == 1){
-			return  new Car(time, r1.lastSpot(), last);
+			return  new Car(time, null, last);
 		}else {
 			return  new Car(time, r2.firstSpot().getTurn(), last);
 		}	
 	}
-	
+	public void AvarageTime(){
+		AvarageCarTime = TotalCarTime/Cars;
+	}
+	public int carTime(Car c){
+		return this.time - c.getBornTime(); 
+	} 
     public void readParameters() {
 	// Läser in parametrar för simuleringen
 	// Metoden kan läsa från terminalfönster, dialogrutor
@@ -66,23 +72,44 @@ public class TrafficSystem {
     public void step() {
     	if(s1.isGreen()){
     		Car tmp1 = r1.getFirst();
+    		if(tmp1 != null){
+    			Cars++;
+    			TotalCarTime = TotalCarTime + carTime(tmp1);
+    			if(carTime(tmp1) < lowTime){
+    				lowTime = carTime(tmp1);
+    				
+    			}
+    			if(carTime(tmp1) > longTime){
+        			longTime = carTime(tmp1);
+        			
+    			}
+    		}
     	}
     	if(s2.isGreen()){
     		Car tmp2 = r2.getFirst();
+    		if(tmp2 != null){
+    			Cars++;
+    			TotalCarTime = TotalCarTime + carTime(tmp2);
+    			if(carTime(tmp2) < lowTime){
+    				lowTime = carTime(tmp2);
+    			}
+    			if(carTime(tmp2) > longTime){
+    			longTime = carTime(tmp2);	
+    			}
+    		}
     	}
-    	
     	
     	r2.step();
     	r1.step();
     	
     	if(this.NextCar != 0){
-    		NextCar--;
+    		this.NextCar--;
     	}else{ 
     		r0.putLast(CreateCar());
     		nextcar(Ankomstintesitet);
     	}
     	
-    	if(r0.firstCar().getDestination() == r1.lastSpot()){
+    	if(r0.firstCar().getDestination() == null){
     		r1.putLast(r0.getFirst()); //Komihåg tider!
     	}else{
     		r2.putLast(r0.getFirst());

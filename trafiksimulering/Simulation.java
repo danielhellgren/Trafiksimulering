@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
  /*
   Modell för trafiksimulering
   ===========================
@@ -62,8 +64,21 @@
 
 
 public class Simulation {
+	
 
+	public void AvarageTime(){
+		AvarageCarTime = TotalCarTime/Cars;
+	}
     public static void main(String [] args) {
+    TrafficSystem sim = new	TrafficSystem(40,  10, 60, 30, 60, 30, 10);
+    	Scanner sc = new Scanner(System.in);
+    	System.out.println("For how long time should the Simulation go?\n Enter Number: "); 
+    	int Time = sc.nextInt();
+    	while(Time >= 0){
+    sim.step();
+    Time--;
+    	}
+    	AvarageTime();
 	// Skapar ett TrafficSystem
 	// Utför stegningen, anropar utskriftsmetoder
 

@@ -23,6 +23,10 @@ public class Car {
     	currentPosition = startingPos; 
     			
     }
+    public int getBornTime(){
+    	return bornTime;
+    	
+    }
     public CarPosition getDestination() {
     	return destination;
     }
