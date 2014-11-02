@@ -39,7 +39,7 @@ public class CarPosition{
 	}
 
 	public CarPosition getTurn() {
-		return turn;
+		return this.turn;
 	}
 
 	public Car getCurrentCar() {

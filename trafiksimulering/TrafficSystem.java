@@ -50,7 +50,7 @@ public class TrafficSystem {
 		if(Dest == 1){
 			return  new Car(time, r1.lastSpot(), last);
 		}else {
-			return  new Car(time, r2.lastSpot(), last);
+			return  new Car(time, r2.firstSpot().getTurn(), last);
 		}	
 	}
 	
