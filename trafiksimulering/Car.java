@@ -11,15 +11,14 @@ public class Car {
     
    
     public void step(){
-     bornTime++;
-     if(currentPosition.moveForward()){
+    	if(currentPosition.moveForward()){
     	 setCurrentPosition(currentPosition.getForward());
     	 
      }
       	// Uppdatera bilen ett tidssteg
     }
-    public Car(CarPosition dest, CarPosition startingPos){
-    	bornTime = 0;
+    public Car(int bornTime, CarPosition dest, CarPosition startingPos){
+    	this.bornTime = bornTime;
     	destination = dest;
     	currentPosition = startingPos; 
     			
@@ -41,7 +40,7 @@ public class Car {
 
     public String toString(){
     	
-    	return "Car(Born Time: " + bornTime + ")\nCar(Destination: " + destination + " \nCar(current position: " + currentPosition + ")\n";
+    	return "Car(Born Time: " + bornTime + ") Car(Destination: " + destination + "  Car(current position: " + currentPosition + ") ";
     	}
    // public static void main(String args[]){
     //	System.out.println("Vi gör en bil");

@@ -55,7 +55,7 @@ public class Lane {
     	}
     	while(i <= getLength()){
     		if(theLane[i].getCurrentCar() != null && theLane[i].moveForward()){
-    			theLane[i].getForward().setCurrentCar(theLane[i].getCurrentCar());
+    			theLane[i].getCurrentCar().step();
     			theLane[i].setCurrentCar(null);
     		}
     		i++;
@@ -65,7 +65,16 @@ public class Lane {
         // (om det går). (Fordonet på plats 0 tas bort utifrån 
 	// mm h a metoden nedan.)
     }
-
+    public CarPosition firstSpot(){
+    	CarPosition first = theLane[0];
+    	return first;
+    }
+    
+    public CarPosition lastSpot(){
+    	int i = getLength();
+    	return theLane[i];
+    }
+    
     public Car getFirst() {
     	Car First = theLane[0].getCurrentCar();
     	theLane[0].setCurrentCar(null);
@@ -99,15 +108,12 @@ public class Lane {
 
     public String toString() {
     	int i = getLength();
-    	int cars = 0;
+    	String s = null;
     	while(i>=0){
-    		if(theLane[i].getCurrentCar() != null){
-    			cars++;
-    		}
+    		s =  s + "theLane(" + theLane[i].getCurrentCar().toString() + ")\n";
     		i++;
-    		
     	}
-    	return "number of Cars in the lane: (" + cars + ") out of (" + i + ") available spots.\n";
+    	return s;
     	//...
     	}
 
