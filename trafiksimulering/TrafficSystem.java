@@ -5,7 +5,7 @@ public class TrafficSystem {
 	private int TotalCarTime = 0;
 	private int AvarageCarTime = 0; // system som skall studeras.
 	private int Cars = 0;
-	private int lowTime = 0;
+	private int lowTime;
 	private int longTime = 0;
    // Samlar statistik
     
@@ -16,7 +16,7 @@ public class TrafficSystem {
     private Light s1;
     private Light s2;
     private int Ankomstintesitet;
-    private int NextCar;
+    private int NextCar = 0;
     // Diverse attribut för simuleringsparametrar (ankomstintensiteter,
     // destinationer...)
 
@@ -37,8 +37,8 @@ public class TrafficSystem {
     	this.r1 = new Lane(r);
     	this.r2 = new Lane(r);
     	this.r2.firstSpot().setTurn(turn);
-    	this.s1 = new Light(s11,s12);
-    	this.s2 = new Light(s21,s22);
+    	this.s1 = new Light(s1Period,s1Green);
+    	this.s2 = new Light(s2Period,s2Green);
     	this.Ankomstintesitet = Ankomstintensitet;
     	nextcar(this.Ankomstintesitet);
     	
@@ -47,15 +47,15 @@ public class TrafficSystem {
 	public Car CreateCar(){
 		Random rand = new Random();
 		int Dest = rand.nextInt(1)+1;
-		CarPosition last = r0.lastSpot();
+		CarPosition tmp = new CarPosition(r0);
 		if(Dest == 1){
-			return  new Car(time, null, last);
+			return  new Car(time, r1.firstSpot(), tmp);
 		}else {
-			return  new Car(time, r2.firstSpot().getTurn(), last);
+			return  new Car(time, r2.firstSpot().getTurn(), tmp);
 		}	
 	}
 	public void AvarageTime(){
-		AvarageCarTime = TotalCarTime/Cars;
+		AvarageCarTime = TotalCarTime/getCars();
 	}
 	public int carTime(Car c){
 		return this.time - c.getBornTime(); 
@@ -73,9 +73,10 @@ public class TrafficSystem {
     	if(s1.isGreen()){
     		Car tmp1 = r1.getFirst();
     		if(tmp1 != null){
-    			Cars++;
+    			setCars(getCars() + 1);
     			TotalCarTime = TotalCarTime + carTime(tmp1);
-    			if(carTime(tmp1) < lowTime){
+    			
+    			if(getCars() == 0 || carTime(tmp1) < lowTime){
     				lowTime = carTime(tmp1);
     				
     			}
@@ -88,9 +89,9 @@ public class TrafficSystem {
     	if(s2.isGreen()){
     		Car tmp2 = r2.getFirst();
     		if(tmp2 != null){
-    			Cars++;
+    			setCars(getCars() + 1);
     			TotalCarTime = TotalCarTime + carTime(tmp2);
-    			if(carTime(tmp2) < lowTime){
+    			if(getCars() == 0 || carTime(tmp2) < lowTime){
     				lowTime = carTime(tmp2);
     			}
     			if(carTime(tmp2) > longTime){
@@ -99,22 +100,34 @@ public class TrafficSystem {
     		}
     	}
     	
-    	r2.step();
     	r1.step();
+    	r2.step();
+    	
+    	if(r0.firstCar() != null && r0.firstCar().getDestination() == r1.firstSpot()){
+    		if(r1.lastFree()){
+    		r1.putLast(r0.getFirst());
+    		}
+    	}
+    	else{
+    		if(r2.lastFree()){
+    		r2.putLast(r0.getFirst());
+    		}
+    	}
+    	
+    	r0.step();
     	
     	if(this.NextCar != 0){
     		this.NextCar--;
     	}else{ 
+    		if(r0.lastFree()){
     		r0.putLast(CreateCar());
     		nextcar(Ankomstintesitet);
+    		}
     	}
     	
-    	if(r0.firstCar().getDestination() == null){
-    		r1.putLast(r0.getFirst()); //Komihåg tider!
-    	}else{
-    		r2.putLast(r0.getFirst());
-    	}
-    	r0.step();
+    	
+    	
+    	
     	s1.step();
     	s2.step();
     	this.time++;
@@ -130,10 +143,16 @@ public class TrafficSystem {
     }
 
     public void print() {
-    	String s = r0.toString() + r1.toString() + r2.toString();
+    	String s =r1.toString() + r0.toString() + "\n" + r2.toString();
     	System.out.println(s);
 	// Skriv ut en grafisk representation av kösituationen
 	// med hjälp av klassernas toString-metoder
     }
+	public int getCars() {
+		return Cars;
+	}
+	public void setCars(int cars) {
+		Cars = cars;
+	}
 
 }

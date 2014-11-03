@@ -43,9 +43,12 @@ public class Car {
     //...
 
     public String toString(){
-    	
-    	return "Car(Born Time: " + bornTime + ") Car(Destination: " + destination + "  Car(current position: " + currentPosition + ") ";
+    	if(getDestination() == null){
+    		return "[F]";
+    	}else{
+    		return   "[T]";
     	}
+    }
    // public static void main(String args[]){
     //	System.out.println("Vi gör en bil");
     //	Car bob = new Car(null, null);

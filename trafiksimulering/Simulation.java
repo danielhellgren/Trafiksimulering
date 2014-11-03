@@ -66,19 +66,21 @@ import java.util.Scanner;
 public class Simulation {
 	
 
-	public void AvarageTime(){
-		AvarageCarTime = TotalCarTime/Cars;
-	}
+	
+	
     public static void main(String [] args) {
-    TrafficSystem sim = new	TrafficSystem(40,  10, 60, 30, 60, 30, 10);
+    	TrafficSystem sim = new	TrafficSystem(10, 3, 10, 5, 10, 5, 4); // (r0, r1 o r2, period s1, green s1, period s2, green s2, ankonstint.)
     	Scanner sc = new Scanner(System.in);
     	System.out.println("For how long time should the Simulation go?\n Enter Number: "); 
-    	int Time = sc.nextInt();
-    	while(Time >= 0){
-    sim.step();
-    Time--;
+    	//int time = sc.nextInt();
+    	int time = 186;
+    	while(time >= 0){
+    		sim.step();
+    		sim.print();
+    		time--;
+    		System.out.println(""+ sim.getCars());
     	}
-    	AvarageTime();
+    //sim.AvarageTime();
 	// Skapar ett TrafficSystem
 	// Utför stegningen, anropar utskriftsmetoder
 
