@@ -5,19 +5,20 @@ import java.util.Scanner;
 public class Car {
 
     private int bornTime;
-    private CarPosition destination; 
-
+    private int destination; 
+    // 0 >= Rakt fram  0 <  Sväng
     private CarPosition currentPosition;
     
    
     public void step(){
-    	if(currentPosition.moveForward()){
+    	if(currentPosition != null && currentPosition.moveForward()){
+    		
     	 setCurrentPosition(currentPosition.getForward());
-    	 
+    	 currentPosition.setCurrentCar(this);
      }
       	// Uppdatera bilen ett tidssteg
     }
-    public Car(int bornTime, CarPosition dest, CarPosition startingPos){
+    public Car(int bornTime, int dest, CarPosition startingPos){
     	this.bornTime = bornTime;
     	destination = dest;
     	currentPosition = startingPos; 
@@ -27,13 +28,13 @@ public class Car {
     	return bornTime;
     	
     }
-    public CarPosition getDestination() {
-    	return destination;
+    public int getDestination() {
+    	return this.destination;
     }
     public CarPosition getCurrent_position(){
-    	return currentPosition;
+    	return this.currentPosition;
     }
-    public void setDestination(CarPosition dest){
+    public void setDestination(int dest){
     	this.destination = dest;
     }
     public void setCurrentPosition(CarPosition pos){
@@ -43,7 +44,7 @@ public class Car {
     //...
 
     public String toString(){
-    	if(getDestination() == null){
+    	if(this.getDestination() > 0) {
     		return "[F]";
     	}else{
     		return   "[T]";

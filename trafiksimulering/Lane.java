@@ -12,7 +12,7 @@ public class Lane {
 		theLane = new CarPosition[n];
 
 		for (int i = 0; i <= n - 1; i++) {
-			theLane[i] = new CarPosition(this);
+			 theLane[i] = new CarPosition(this);
 		}
 		for (int x = n - 1; x > 0; x--) {
 			theLane[x].setForward(theLane[x - 1]);
@@ -33,14 +33,14 @@ public class Lane {
 		return theLane.length;
 	}
 
-	public void setParallel(Lane sideLane) {
-		int i = 0;
-
-		while (i < sideLane.getLength() && i < theLane.length) {
-			theLane[i].setTurn(sideLane.theLane[i]);
-			i++;
-		}
-	}
+//	public void setParallel(Lane sideLane) {
+//		int i = 0;
+//
+//		while (i < sideLane.getLength() && i < theLane.length) {
+//			theLane[i].setTurn(sideLane.theLane[i]);
+//			i++;
+//		}
+//	}
 
 	public void step() {
 
@@ -48,7 +48,7 @@ public class Lane {
 		// if(theLane[0].getCurrentCar() != null){
 		// getFirst();
 		// }
-		while (i < getLength()) {
+		while (i <= getLength()-1) {
 			if (theLane[i].getCurrentCar() != null && theLane[i].moveForward()) {
 				theLane[i].getCurrentCar().step();
 				theLane[i].setCurrentCar(null);
@@ -95,6 +95,7 @@ public class Lane {
 			// } else {
 			int i = getLength() - 1;
 			theLane[i].setCurrentCar(c);
+			c.setCurrentPosition(theLane[i]);
 
 		}
 		// Ställ en bil på sista platsen på vägen ^throws OverflowException

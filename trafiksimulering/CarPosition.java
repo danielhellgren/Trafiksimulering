@@ -9,7 +9,7 @@ public class CarPosition{
 	private Lane owner;
 	
 	private CarPosition forward;
-	private CarPosition turn;
+	private int turn = 0;
 	
 	public CarPosition(Lane a_Owner){
 		
@@ -23,22 +23,25 @@ public class CarPosition{
 	
 	public boolean moveForward(){
 		
-		return (getForward().getCurrentCar() == null);
+	 if(getForward() != null){
+		 return (getForward().getCurrentCar() == null);
+		 
+	 }
+	 else {
+		 return false;
+	 }
 	
 		// Flytta bilen fram till forward
 	}
 	
-	public boolean turn()	{
-		
-		return (turn.getCurrentCar() == null);
-		// Flytta bilen till turn
-	}
+	
+	
 
-	public void setTurn(CarPosition turn) {
+	public void setTurn(int turn) {
 		this.turn = turn;
 	}
 
-	public CarPosition getTurn() {
+	public int getTurn() {
 		return this.turn;
 	}
 
@@ -48,10 +51,16 @@ public class CarPosition{
 
 	public void setCurrentCar(Car currentCar) {
 		this.currentCar = currentCar;
+		
 	}
 
 	public CarPosition getForward() {
+		if(forward != null){
 		return forward;
+		}
+		else {
+			return null;
+		}
 	}
 
 	public void setForward(CarPosition forward) {

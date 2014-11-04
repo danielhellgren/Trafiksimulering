@@ -32,26 +32,29 @@ public class TrafficSystem {
 		this.NextCar = Ai;
 	}
 	public TrafficSystem(int r0,  int r, int s1Period, int s1Green, int s2Period, int s2Green, int Ankomstintensitet){
-		CarPosition turn = new CarPosition(this.r2);
+		
     	this.r0 = new Lane(r0);
     	this.r1 = new Lane(r);
     	this.r2 = new Lane(r);
-    	this.r2.firstSpot().setTurn(turn);
+    	this.r2.firstSpot().setTurn(1);
     	this.s1 = new Light(s1Period,s1Green);
     	this.s2 = new Light(s2Period,s2Green);
     	this.Ankomstintesitet = Ankomstintensitet;
     	nextcar(this.Ankomstintesitet);
     	
+    	
     	//...
     	}
+	
+	
 	public Car CreateCar(){
 		Random rand = new Random();
-		int Dest = rand.nextInt(1)+1;
-		CarPosition tmp = new CarPosition(r0);
+		int Dest = rand.nextInt(2);
+		
 		if(Dest == 1){
-			return  new Car(time, r1.firstSpot(), tmp);
+			return  new Car(time, 1, r0.lastSpot());
 		}else {
-			return  new Car(time, r2.firstSpot().getTurn(), tmp);
+			return  new Car(time, 0, r0.lastSpot());
 		}	
 	}
 	public void AvarageTime(){
@@ -103,16 +106,16 @@ public class TrafficSystem {
     	r1.step();
     	r2.step();
     	
-    	if(r0.firstCar() != null && r0.firstCar().getDestination() == r1.firstSpot()){
-    		if(r1.lastFree()){
+    	if(r0.firstCar() != null){
+    		if(r0.firstCar().getDestination() <= 0){
     		r1.putLast(r0.getFirst());
     		}
-    	}
-    	else{
-    		if(r2.lastFree()){
-    		r2.putLast(r0.getFirst());
+    	
+    		else{    		
+    			r2.putLast(r0.getFirst());
+    			}
     		}
-    	}
+    	
     	
     	r0.step();
     	
