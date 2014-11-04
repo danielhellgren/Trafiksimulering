@@ -70,16 +70,16 @@ public class Simulation {
 	
     public static void main(String [] args) {
     	TrafficSystem sim = new	TrafficSystem(10, 3, 10, 5, 10, 5, 4); // (r0, r1 o r2, period s1, green s1, period s2, green s2, ankonstint.)
-    //	Scanner sc = new Scanner(System.in);
+    	Scanner sc = new Scanner(System.in);
     	System.out.println("For how long time should the Simulation go?\n Enter Number: "); 
-    	//int time = sc.nextInt();
-    	int time = 186;
+    	int time = sc.nextInt();
+    	
     	
     	while(time >= 0){
     		sim.step();
     		sim.print();
     		time--;
-    		System.out.println(""+ sim.getCars());
+    		
     	}
     //sim.AvarageTime();
 	// Skapar ett TrafficSystem

@@ -25,9 +25,14 @@ public class Light {
     }
 
     public String  toString()  {
-    	
-    	return "Light(period: "+ period +", green: " + green +", time: " + time + ")\n";
-    	//...
+    	if(isGreen()){
+    	return "Green: " + (green-time) + "\n";
     	}
+    	else{
+    		return "Red:   " + (period-time) + "\n";
+    	}
+    		
+    	}
+    	
 	
 }

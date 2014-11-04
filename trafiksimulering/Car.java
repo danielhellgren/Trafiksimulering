@@ -6,7 +6,7 @@ public class Car {
 
     private int bornTime;
     private int destination; 
-    // 0 >= Rakt fram  0 <  Sväng
+    // 0 > Rakt fram  0 =<  Sväng
     private CarPosition currentPosition;
     
    

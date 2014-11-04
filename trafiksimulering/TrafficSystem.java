@@ -107,7 +107,7 @@ public class TrafficSystem {
     	r2.step();
     	
     	if(r0.firstCar() != null){
-    		if(r0.firstCar().getDestination() <= 0){
+    		if(r0.firstCar().getDestination() > 0){
     		r1.putLast(r0.getFirst());
     		}
     	
@@ -146,7 +146,7 @@ public class TrafficSystem {
     }
 
     public void print() {
-    	String s =r1.toString() + r0.toString() + "\n" + r2.toString();
+    	String s = s1.toString() + "\n" + s2.toString() + "\n" + r1.toString() + r0.toString() + "\n" + r2.toString();
     	System.out.println(s);
 	// Skriv ut en grafisk representation av kösituationen
 	// med hjälp av klassernas toString-metoder
