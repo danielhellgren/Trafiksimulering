@@ -8,15 +8,6 @@ Med detta program kan du som användare bygga en egen korsning och se hur olika 
 - E11
 - Z70
 
-Har en readme.md-fil med instruktioner
-
-    hur man bygger programmet
-    hur man kör programmet
-    en lista över samtliga mål som redovisats med programmet
-    listar eventuella utökningar
-    övrig information av nytta
-
-
 ##Bygga Programmet
  För att kompilera kan användaren köra programmet direkt i exempelvis eclipse eller genom javac kompilera Simulation.java i en terminal.
 
